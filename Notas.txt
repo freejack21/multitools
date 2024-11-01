@@ -1,0 +1,142 @@
+ENUMERACION
+
+nmap
+	nmap -sV ip
+	nmap -A ip
+	nmap -p puerto
+	nmap -sn
+	nmap -sU
+	nmap --script vuln
+	ls /usr/share/nmap/scripts | grep [modulo]
+	nmap -p 389 -sV 
+netbios nmap -sU -sV -p 137 --script nbstat.nse [IP]
+snmp    nmap -sU -p 161 --script snmp-[].nse [IP]
+ldap   	nmap -SU -p 389 [IP]
+ldap   	nmap -SU -p 389 --script ldap-brute.nse --script-args ldap.base='"CN=Users,DC=CEN,DC=com"',userdb=users.txt 
+
+ldapsearch
+	ldapsearch  -H ldap://[IP] -x -s base namingcontexts
+	ldapsearch  -H ldap://[IP] -x -b '' -s base '(objectclass=*)'	
+
+NFS
+supernum
+	.\supernum [Hosts.txt]
+
+DNS
+	dig ns [dominio]
+	nmap -sU -p 53 --script dns-brute.nse [dominio] -T4
+	nslookup
+		set querytype=soa
+		[dominio]
+
+SMTP
+	telnet [ip:25]
+		ehlo
+	nmap -sT -sV -sC -T5 -p 25 [IP]
+	nmap -p 25 --script smtp-enum-users.nse [IP]
+
+	smtp-user-enum -M VRFY -U namelist.txt -t [IP]
+
+	
+WEB
+
+nmap -sV --script http-enum [url]
+
+Uniscan (más apropiado para paginas CMS)
+uniscan -u [url] -q    #check directorios
+uniscan -u [url] -we   #directorios y páginas web incluye robots
+uniscan -u [url] -d    # toda la Info de sitio: pluging, mails, links, files, vulne, etc
+
+
+wpscan 
+	wpscan --url [url] -P fichero_pass
+metasploit
+	msfconsole
+		use [nombre de modulo]
+		show options
+		set RHOST
+		set RPORT
+		set USERNAME
+		set FILE_PASS
+		set TARGETURI
+		run
+
+Ghost Eye
+	git clone https://github.com/BullsEyes0/ghost_eye.git 
+	pip3 install -r requirements.txt
+	python3 ghost_eyes.py
+		Seleccionar opción de menu e introducir el nombre del dominio
+		
+
+Whatweb --log-verbose=certifiedhacker.com_report www.certifiedhacker.com
+
+
+CRYPTOGRAFIA
+
+SHA384SUM
+
+Cryptool
+	Encypt/Decrypt>RC4
+	
+
+Snow
+	snow -C -p "password" fichero
+	snow -C m "mensaje" -p "password" fichero_ori fichero_des
+Hashes.com
+
+Veracrypt
+
+BCTextEncoder
+
+Entropic
+	apt install ent (instala entropic)
+	ent [fichero]
+
+Openstego
+
+ANALISIS
+
+Wireshark
+	Statistics>IPv4 addresses > Source and Destination
+		tcp.flags.syn  ==  1 and tcp.flags.ack == 0
+	http.request.method == POST
+
+IoT filtro mqtt 
+hijacking filtro MDNS y muchos ARP
+FUERZABRUTA
+hydra
+	hydra -L [usuarios.txt] -P [pass.txt] ftp://
+	hydra -L [usuarios.txt] -P [pass.txt] [ip] [protocolo ssh,smb]
+
+INYECCION SQL
+	hi' OR 1=1 --
+	IDOR find user
+
+sqlmap
+	Abrimos la pagina navegador , Inspección>consola document.cookie y nos muestra la cookie
+	SQLmap -u “URL” –cookie=”cookie”  --dbs       “Muestras BBDD“
+	SQLmap -u “URL” –cookie=”cookie”  -D [bbdd]  -- tables     “muestra tablas de bbdd”
+	SQLmap -u “URL” –cookie=”cookie”   -D [bbdd]   -T User_login --dump “muestra datos de tabla”
+	SQLmap -u “URL” –cookie=”cookie”   -D [bbdd]   -T User_login --os-shell
+
+
+DISPOSITIVOS MOVILES
+	port 5555
+	adb connect ip:port
+	adb shell
+	adb pull
+	adb push
+
+WIFI
+aircrack-ng
+	aircrack-ng [wep.pcap]
+	aircrack-ng -a2 -b [BBS_ID] -w [pass.txt] [WPA2.pcap]
+	
+ANALISIS DE MALWARE
+Bintext 	extraer texto
+PEid      	Metodo osfucacion
+DIE  		Analisis ELF 
+PE Explorer 	Portable exe  analiza
+Dependency Walker	   busca dependencias y metodos
+
+
