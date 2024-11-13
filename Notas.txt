@@ -1,3 +1,5 @@
+ cambiar teclado -> “sudo setxkbmap -layout ’es,es’ -model pc105”
+
 ENUMERACION
 
 nmap
