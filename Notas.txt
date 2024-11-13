@@ -74,6 +74,7 @@ Whatweb --log-verbose=certifiedhacker.com_report www.certifiedhacker.com
 
 
 CRYPTOGRAFIA
+CRC32 en zip windows
 
 SHA384SUM
 
